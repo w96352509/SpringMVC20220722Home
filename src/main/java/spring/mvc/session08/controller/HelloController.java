@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import spring.mvc.session08.entity.User;
+
 @Controller
 @RequestMapping("/hello")
 public class HelloController {
@@ -67,13 +69,23 @@ public class HelloController {
 	}
 	
 	/*
-	 * Map 參數(常用於 form 表單)
+	 * 5. Map 參數(常用於 form 表單)
 	 * 執行路徑: /mvc/hello/person?name=Tomcat&score=95.5&age=18&pass=true
 	 * */
 	@RequestMapping(value = "/person")
 	@ResponseBody
 	public String getPerson(@RequestParam Map<String, String> person) {
 		return person.toString();
+	}
+	
+	/*
+	 * 6. pojo(entity) 參數自動配置
+	 * 執行路徑: /mvc/hello/user?name=Tomcat&score=95.5&age=18&pass=true
+	 * */
+	@RequestMapping(value = "/user")
+	@ResponseBody
+	public String getUser(User user) {
+		return user.toString();
 	}
 }
 
