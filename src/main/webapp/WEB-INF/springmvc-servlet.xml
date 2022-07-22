@@ -29,5 +29,8 @@
 	
 	<!-- spring mvc enable -->
 	<mvc:annotation-driven />
-
+	
+	<!-- component-scan -->
+	<context:component-scan base-package="spring.mvc" />
+	
 </beans>
