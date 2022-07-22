@@ -2,6 +2,7 @@ package spring.mvc.session08.controller;
 
 import java.util.IntSummaryStatistics;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -65,6 +66,15 @@ public class HelloController {
 		return String.format("%s", stat.toString());
 	}
 	
+	/*
+	 * Map 參數(常用於 form 表單)
+	 * 執行路徑: /mvc/hello/person?name=Tomcat&score=95.5&age=18&pass=true
+	 * */
+	@RequestMapping(value = "/person")
+	@ResponseBody
+	public String getPerson(@RequestParam Map<String, String> person) {
+		return person.toString();
+	}
 }
 
 
