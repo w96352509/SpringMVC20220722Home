@@ -28,10 +28,16 @@ public class HelloController {
 	 * */
 	@RequestMapping(value = "/sayhi")
 	@ResponseBody
-	public String sayHi(@RequestParam(value = "name") String name,
-						@RequestParam(value = "age") Integer age) {
+	public String sayHi(@RequestParam(value = "name", required = false) String name,
+						@RequestParam(value = "age", defaultValue = "10") Integer age) {
 		
 		return String.format("Hi %s %d", name, age);
 	}
+	
+	/*
+	 * 3. Lab 練習
+	 * 執行路徑: /mvc/hello/bmi?h=170&w=60
+	 * 執行結果: bmi = 20.76
+	 * */
 	
 }
