@@ -30,7 +30,7 @@ public class HelloController {
 	
 	/*
 	 * 2. ?後面帶參數 @RequestParam
-	 * 執行路徑: /mvc/hello/sayhi?name=John&age=18
+	 * 執行路徑: /mvc/hello/sayhi?name=John&age=181
 	 * */
 	@RequestMapping(value = "/sayhi")
 	@ResponseBody
