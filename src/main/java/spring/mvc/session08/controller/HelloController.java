@@ -3,8 +3,11 @@ package spring.mvc.session08.controller;
 import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -87,6 +90,82 @@ public class HelloController {
 	public String getUser(User user) {
 		return user.toString();
 	}
+	
+	/*
+	 * 7. 在 body 中傳送 json 資料
+	 * {
+	 *     "name": "John",
+	 *     "age": 18,
+	 *     "score": 90.5,
+	 *     "pass":true
+	 * }
+	 * Client Header 端要加入 Content-Type: application/json
+	 * 執行路徑: /mvc/hello/create/user
+	 * */
+	@RequestMapping("create/user")
+	@ResponseBody
+	public User createUser(@RequestBody User user) {
+		
+		return user;
+	}
+	
+	/*
+	 * 8. 路徑參數 @PathVariable
+	 * 執行路徑: /mvc/hello/exam/75 -> 印出結果: 75 pass
+	 * 執行路徑: /mvc/hello/exam/45 -> 印出結果: 45 fail
+	 * */
+	@RequestMapping("exam/{score}")
+	@ResponseBody
+	public String examScore(@PathVariable("score") Integer score) {
+		return String.format("%s %d",(score >= 60)?"pass":"fail",score);
+	}
+	
+	/*
+	 * 9. 路徑參數 @PathVariable (萬用字元: * 任意多字, ? 任意一字)
+	 * 執行路徑: /mvc/hello/any/abc/java8
+	 * 執行路徑: /mvc/hello/any/defghi/java9
+	 * */
+	 @RequestMapping("/any/*/java?")
+	 @ResponseBody
+	 public String any() {
+		 return "Hello any";
+	 }
+	 
+	 /*
+		 * 10. @RequestParam + @PathVariable (Lab 練習)
+		 * 執行路徑：/mvc/hello/calc/add?x=30&y=20  -> Result：50
+		 * 執行路徑：/mvc/hello/calc/sub?x=30&y=20  -> Result：10
+		 * 執行路徑：/mvc/hello/calc/sub?y=20       -> Result：-20
+		 * 執行路徑：/mvc/hello/calc/add            -> Result：0
+	  */
+	 @RequestMapping("/calc/{exp}")
+	 @ResponseBody
+	 public String calcExp(@PathVariable("exp") String exp , 
+			               @RequestParam(value= "x" , required = false , defaultValue = "0") Optional<Integer> x ,
+			               @RequestParam(value= "y" , required = false , defaultValue = "0") Optional<Integer> y) {
+		if (x.isPresent() && y.isPresent()) {
+			switch (exp) {
+			case "add":
+				return x.get() + y.get() +"";
+		    
+			case "sub":
+				
+				return x.get() - y.get() +"";
+			default :
+				return "None"; 
+			}
+		} 
+		
+		if (x.isPresent()) {
+			return x.get()+"";
+		}
+		
+		if (y.isPresent()) {
+			return y.get()+"";
+		}
+		
+		 return "0";
+	 } 
 }
 
 
