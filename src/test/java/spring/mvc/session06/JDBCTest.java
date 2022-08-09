@@ -17,8 +17,8 @@ public class JDBCTest {
 	@Test
 	public void test() {
 		
-		ApplicationContext ctx = new AnnotationConfigApplicationContext(SpringJDBCConfig.class);
-		//ApplicationContext ctx = new ClassPathXmlApplicationContext("jdbc-config.xml");
+		 //ApplicationContext ctx = new AnnotationConfigApplicationContext(SpringJDBCConfig.class);
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("jdbc-config.xml");
 		EmpDao empDao = ctx.getBean(EmpDao.class);
 		List<Emp> emps = new ArrayList<>();
 		empDao.queryJobsAndEmp().stream().forEach(System.out::println);
