@@ -16,7 +16,7 @@ public class Employee {
 	private String ename;
 	
 	@NotNull(message = "{employee.salary.empty}")
-	@Range(min = 2 , max = 10 , message = "{employee.salary.range}")
+	@Range(min = 38000 , max = 300000,message = "{employee.salary.range}")
 	private Integer salary;
 	
 	private Date createtime;
