@@ -30,7 +30,7 @@ public class JobDaoImpl implements JobDao{
 
 	@Override
 	public int delete(Integer jid) {
-		String sql = "delete form job where jid=?";
+		String sql = "delete from job where jid=?";
 		return jdbcTemplate.update(sql,jid);
 	}
 
@@ -60,14 +60,31 @@ public class JobDaoImpl implements JobDao{
 
 	@Override
 	public List<Job> query(Object httpSessionValue) {
-		// TODO Auto-generated method stub
-		return null;
+		if(httpSessionValue == null) {
+			return query();
+		}
+		    return queryPage((int)httpSessionValue);
 	}
 
 	@Override
 	public List<Job> queryPage(int offset) {
-		// TODO Auto-generated method stub
-		return null;
+		ResultSetExtractor<List<Job>> resultSetExtractor = 
+				JdbcTemplateMapperFactory
+				.newInstance()
+				.addKeys("jid")
+				.newResultSetExtractor(Job.class);
+		
+		String sql ="select "
+				  + "j.jid , j.jname , j.eid , "
+				  + "e.eid as employee_eid, e.ename as employee_ename, e.salary as employee_salary, "
+				  + "e.createtime as employee_createtime "
+				  + "from job j left join employee e on j.eid = e.eid order by j.jid";
+		
+		if(offset >= 0) {
+			sql += String.format(" limit %d offset %d ", LIMIT , offset);
+		}
+		
+		return jdbcTemplate.query(sql, resultSetExtractor);
 	}
 
 }

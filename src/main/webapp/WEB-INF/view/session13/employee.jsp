@@ -100,6 +100,7 @@ function jobs() {
 				<fieldset>
 				<legend>
 				 <b>Employee Form</b> &nbsp;|&nbsp;
+				 <a href="${ pageContext.request.contextPath}/mvc/jdbc/job/">Job Form</a>
 				 
 				</legend>             
 				<input type="hidden" id="_method" name="_method" value="${_method}"/>
