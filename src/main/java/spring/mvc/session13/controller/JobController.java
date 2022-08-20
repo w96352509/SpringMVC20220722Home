@@ -51,7 +51,6 @@ public class JobController {
 	@GetMapping(value = "/page/{num}")
 	public String page(@PathVariable("num") Integer num , @ModelAttribute  Job job , Model model , HttpSession httpSession) {
 		int offset = (num-1) * jobDao.LIMIT;
-		System.out.println(offset);
 		if(offset>=0) {
 			httpSession.setAttribute("offset_job", offset);
 		}else {
