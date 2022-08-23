@@ -1,64 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:c="http://www.springframework.org/schema/c"
 	xmlns:cache="http://www.springframework.org/schema/cache"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-	xmlns:jee="http://www.springframework.org/schema/jee"
 	xmlns:lang="http://www.springframework.org/schema/lang"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
 	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:repository="http://www.springframework.org/schema/data/repository"
 	xmlns:task="http://www.springframework.org/schema/task"
-	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:util="http://www.springframework.org/schema/util"
 	xmlns:websocket="http://www.springframework.org/schema/websocket"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
-		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.3.xsd
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/jee https://www.springframework.org/schema/jee/spring-jee.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
-		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
-		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.3.xsd
-		http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-4.3.xsd
-		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
-		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/data/jpa https://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+		http://www.springframework.org/schema/websocket https://www.springframework.org/schema/websocket/spring-websocket.xsd
+		http://www.springframework.org/schema/jdbc https://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+		http://www.springframework.org/schema/cache https://www.springframework.org/schema/cache/spring-cache.xsd
+		http://www.springframework.org/schema/task https://www.springframework.org/schema/task/spring-task.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/lang https://www.springframework.org/schema/lang/spring-lang.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
-		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd
-		http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd">
-
+		http://www.springframework.org/schema/data/repository http://www.springframework.org/schema/data/repository/spring-repository.xsd">
+	
 	<!-- spring mvc enable -->
 	<mvc:annotation-driven />
-
+	
 	<!-- component-scan -->
-	<context:component-scan
-		base-package="spring.mvc" />
-
+	<context:component-scan base-package="spring.mvc" />
+	
 	<!-- 配置 view 渲染器的位置 -->
 	<bean id="internalResourceViewResolver"
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		  class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/view/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
-
+	
 	<!-- 錯誤訊息設定 properites -->
-	<bean id="messageSource"
-		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-		<property name="basename"
-			value="/WEB-INF/resource/errorMessage" />
-		<property name="useCodeAsDefaultMessage" value="false" />
-		<property name="defaultEncoding" value="UTF-8" />
-	</bean>
-
-	<!-- JSR 303 Validator 驗證: Hibernate Validator 實作驗證配置 -->
-	<bean id="validator"
-		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
-		<property name="providerClass"
-			value="org.hibernate.validator.HibernateValidator" />
-		<property name="validationMessageSource" ref="messageSource" />
-	</bean>
-
-	<!-- 解決中文 與 JSR 303 Validator 設定 -->
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basename" value="/WEB-INF/resource/errorMessage" />
+        <property name="useCodeAsDefaultMessage" value="false"/>  
+        <property name="defaultEncoding" value="UTF-8"/>
+    </bean>
+    
+    <!-- JSR 303 Validator 驗證: Hibernate Validator 實作驗證配置-->
+    <bean id="validator"
+    		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+    	<property name="providerClass" value="org.hibernate.validator.HibernateValidator" />
+    	<property name="validationMessageSource" ref="messageSource" />
+    </bean>
+    
+    <!--  解決中文 與 JSR 303 Validator 設定 -->
 	<mvc:annotation-driven validator="validator">
 		<mvc:message-converters
 			register-defaults="true">
@@ -97,10 +97,38 @@
 	</bean>
 	
 	<!-- named parameter jdbc template -->
-	<bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+ 	<bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
 		<constructor-arg ref="dataSource" />
 	</bean>
-	
+    
+    <!-- 2. 配置 JPA 的 EntityManagerFactory -->
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<!-- 
+			jpaVendorAdapter 屬性用於指明哪一個廠商的JPA實現，Spring提供了多個JPA廠商介面卡：
+			EclipseLinkJpaVendorAdapter、HibernateJpaVendorAdapter、OpenJpaVendorAdapter 
+		-->
+		<property name="jpaVendorAdapter">
+			<bean
+				class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"></bean>
+		</property>
+		<property name="packagesToScan">
+			<list>
+				<value>spring.mvc</value>
+			</list>
+		</property>
+		<property name="jpaProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+			</props>
+		</property>
+	</bean>
+    
+    	
 	<!-- 配置事務管理器 transaction manager -->
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
@@ -108,7 +136,11 @@
 	
 	<!-- 開啟事務的註解@驅動, 對事物相關的註解@進行掃描與解析 -->
 	<tx:annotation-driven transaction-manager="transactionManager" />
-	
-	
+
+    <jpa:repositories base-package="spring.mvc"
+		entity-manager-factory-ref="entityManagerFactory"
+		transaction-manager-ref="transactionManager">
+	</jpa:repositories>
+   
 	
 </beans>
