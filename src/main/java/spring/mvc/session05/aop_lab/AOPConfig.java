@@ -11,6 +11,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @EnableAspectJAutoProxy
 public class AOPConfig {
 
+	// s
 	@Bean(name = "dancer")
 	public Performance dancer() {
 		Dancer dancer = new Dancer();
