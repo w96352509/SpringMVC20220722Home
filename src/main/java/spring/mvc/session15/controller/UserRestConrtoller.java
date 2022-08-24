@@ -24,7 +24,7 @@ public class UserRestConrtoller {
 	
 	@Autowired
 	private UserRepository userRepository;
-	
+	// 1
 	@GetMapping("/auto_add") //自動新增 user 資料
 	@Transactional
 	public String addAuto() {
